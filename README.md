@@ -3,7 +3,7 @@
 ###Todo
 * cleanup
 * split main to main + input interpretor
-* observers5
+* observers
 * ghost piece
 * 5 next piece queue
 * clock
@@ -22,10 +22,9 @@
 * port to windows
 * replay and video capture
 
-tetrisproject.googlecode.com/files/TetrisRequirements.pdf
-tetris.wikia.com/wiki/Tetris_Guideline
-http://colinfahey.com/tetris/tetris.html
-section 5
+[reference 1](http://tetrisproject.googlecode.com/files/TetrisRequirements.pdf)
+[reference 2](http://tetris.wikia.com/wiki/Tetris_Guideline)
+[reference 3 section 5](http://colinfahey.com/tetris/tetris.html)
 
 ###How to use
 	make
