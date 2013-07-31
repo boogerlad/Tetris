@@ -1,9 +1,11 @@
 #Textris
 
-##Todo
+###Todo
 * cleanup
 * split main to main + input interpretor
-* observers
+* observers5
+* ghost piece
+* 5 next piece queue
 * clock
 * wallkicks
 * srs
@@ -25,7 +27,7 @@ tetris.wikia.com/wiki/Tetris_Guideline
 http://colinfahey.com/tetris/tetris.html
 section 5
 
-##How to use
+###How to use
 	make
 	./quadris
 That will compile for you. Left, right, down, drop, clockwise, counterclockwise, levelup, leveldown and restart work. You can append an integer multiplier in front of each if you want. Exit by eof aka ctrl+d.
