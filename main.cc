@@ -9,11 +9,24 @@
 #include <string>
 #include <sstream>
 #include <stdlib.h>
+#include <time.h>
+#include <chrono>
 #include "grid.h"
 
 using namespace std;
 
 int main(int argc, char* argv[]) {
+
+	auto start = std::chrono::high_resolution_clock::now();
+
+	std::cout << "socks" << std::endl;
+
+	auto finish = std::chrono::high_resolution_clock::now();
+	std::cout << (finish - start).count() << " microseconds\n";
+	unsigned long long time = (finish - start).count();
+	std::cout << time << std::endl;
+
+
    // commands
    string left = "left";
    string right = "right";
@@ -163,6 +176,7 @@ int main(int argc, char* argv[]) {
 		// clockwise command
 		 if ( comm.size() <= cw.size() ){
 			if ( ( cw.compare( 0,comm.size(),comm ) == 0 ) && comm.size() >= 2 ){
+			   //
 			   for (int i = 0; i < mult; ++i){
 				  g.cw();
 			   }

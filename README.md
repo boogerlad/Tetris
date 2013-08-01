@@ -1,11 +1,13 @@
 #Textris
 
 ###Todo
+* switch from row, column notation to x, y
 * cleanup
 * split main to main + input interpretor
-* observers
+* observer pattern
 * ghost piece
 * 5 next piece queue
+* block hold
 * clock
 * wallkicks
 * srs
