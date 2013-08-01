@@ -7,13 +7,14 @@
 *******************************************************************************/
 #include <string>
 #include "grid.h"
+#include <iostream>
 
 void Grid::drawBlock(Block& b)
 {
 	for(std::vector<Posn>::const_iterator it = b.getCells().begin(); it != b.getCells().end(); ++it)
 	{
 		Posn absPosn = b.getKey() + *it;
-		cells[absPosn.r][absPosn.c] = b.getType();
+		cells[absPosn.y][absPosn.x] = b.getType();
 	}
 
 }
@@ -23,32 +24,32 @@ void Grid::clearBlock(Block& b)
 	for(std::vector<Posn>::const_iterator it = b.getCells().begin(); it != b.getCells().end(); ++it)
 	{
 		Posn absPosn = b.getKey() + *it;
-		cells[absPosn.r][absPosn.c] = empty;
+		cells[absPosn.y][absPosn.x] = empty;
 	}
 }
 
-bool Grid::testCollision(int r, int c, int rotIdx)
+bool Grid::testCollision(bool down)
 {
 	if(currentBlock->set)
 	{
 		return true;
 	}
-	for(std::vector<Posn>::const_iterator it = currentBlock->getCells(rotIdx).begin(); it != currentBlock->getCells(rotIdx).end(); ++it)
+	for(std::vector<Posn>::const_iterator it = currentBlock->getCells().begin(); it != currentBlock->getCells().end(); ++it)
 	{
 		Posn absPosn = currentBlock->getKey() + *it;
-		if(absPosn.c + c < 0 || absPosn.c + c >= maxCols)
+		if(absPosn.x < 0 || absPosn.x >= maxX)
 		{
 			return true;
 		}
-		else if(absPosn.r + r < 0 || absPosn.r + r >= maxRows)
+		else if(absPosn.y < 0 || absPosn.y >= maxY)
 		{
 			currentBlock->set = true;
 			blocksOnGrid.push_back(currentBlock);
 			return true;
 		}
-		else if(cells[absPosn.r + r][absPosn.c + c] != empty)
+		else if(cells[absPosn.y][absPosn.x] != empty)
 		{
-			if(r)
+			if(down)
 			{
 				currentBlock->set = true;
 				blocksOnGrid.push_back(currentBlock);
@@ -61,30 +62,16 @@ bool Grid::testCollision(int r, int c, int rotIdx)
 
 Grid::Grid(int level, std::string file)
 	: level(level)
-	, cells(new char*[maxRows])
 	, gen(Level::makeBlockGenerator(level, file))
 	, scoreboard(new Scoreboard())
 	, currentBlock(0)
 	, nextBlock(gen->makeBlock())
 {
-	for(int i = 0; i < maxRows; ++i)
-	{
-		cells[i] = new char[maxCols];
-		for(int j = 0; j < maxCols; ++j)
-		{
-			cells[i][j] = empty;
-		}
-	}
+	resetGrid();
 }
 
 Grid::~Grid()
 {
-	for(int i = 0; i < maxRows; ++i)
-	{
-
-		delete[] cells[i];
-	}
-	delete[] cells;
 	delete currentBlock;
 	delete nextBlock;
 	for(std::vector<Block*>::iterator it = blocksOnGrid.begin(); it != blocksOnGrid.end(); ++it)
@@ -97,13 +84,18 @@ Grid::~Grid()
 
 void Grid::resetGrid()
 {
-	for(int i = 0; i < maxRows; ++i)
+	for(int i = 0; i < maxY; ++i)
 	{
-		for(int j = 0; j < maxCols; ++j)
+		for(int j = 0; j < maxX; ++j)
 		{
 			cells[i][j] = empty;
 		}
 	}
+}
+
+void Grid::reset()
+{
+	resetGrid();
 	for(std::vector<Block*>::iterator it = blocksOnGrid.begin(); it != blocksOnGrid.end();)
 	{
 		delete *it;
@@ -119,8 +111,7 @@ bool Grid::place()
 {
 	currentBlock = nextBlock;
 	nextBlock = gen->makeBlock();
-	if (currentBlock == NULL ) { return false; }
-	if(Grid::testCollision(0, 0, currentBlock->getRotIdx()))
+	if(!currentBlock || Grid::testCollision())
 	{
 		return false;
 	}
@@ -134,9 +125,10 @@ bool Grid::place()
 void Grid::cw()
 {
 	clearBlock(*currentBlock);
-	if(!Grid::testCollision(0, 0, currentBlock->cwRotIdx()))
+	currentBlock->cw();
+	if(Grid::testCollision())
 	{
-		currentBlock->cw();
+		currentBlock->ccw();
 	}
 	drawBlock(*currentBlock);
 }
@@ -144,9 +136,10 @@ void Grid::cw()
 void Grid::ccw()
 {
 	clearBlock(*currentBlock);
-	if(!Grid::testCollision(0, 0, currentBlock->ccwRotIdx()))
+	currentBlock->ccw();
+	if(Grid::testCollision())
 	{
-		currentBlock->ccw();
+		currentBlock->cw();
 	}
 	drawBlock(*currentBlock);
 }
@@ -154,9 +147,10 @@ void Grid::ccw()
 void Grid::down()
 {
 	clearBlock(*currentBlock);
-	if(!Grid::testCollision(1, 0, currentBlock->getRotIdx()))
+	currentBlock->down();
+	if(Grid::testCollision(true))
 	{
-		currentBlock->down();
+		currentBlock->up();
 	}
 	drawBlock(*currentBlock);
 }
@@ -172,9 +166,10 @@ void Grid::drop()
 void Grid::left()
 {
 	clearBlock(*currentBlock);
-	if(!Grid::testCollision(0, -1, currentBlock->getRotIdx()))
+	currentBlock->left();
+	if(Grid::testCollision())
 	{
-		currentBlock->left();
+		currentBlock->right();
 	}
 	drawBlock(*currentBlock);
 }
@@ -182,9 +177,10 @@ void Grid::left()
 void Grid::right()
 {
 	clearBlock(*currentBlock);
-	if(!Grid::testCollision(0, 1, currentBlock->getRotIdx()))
+	currentBlock->right();
+	if(Grid::testCollision())
 	{
-		currentBlock->right();
+		currentBlock->left();
 	}
 	drawBlock(*currentBlock);
 }
@@ -192,10 +188,10 @@ void Grid::right()
 void Grid::clearLines()
 {
 	int numLinesCleared = 0;
-	for(int i = 0; i < maxRows; ++i)
+	for(int i = 0; i < maxY; ++i)
 	{
 		bool filled = true;
-		for(int j = 0; j < maxCols; ++j)
+		for(int j = 0; j < maxX; ++j)
 		{
 			if(cells[i][j] == empty)
 			{
@@ -265,9 +261,9 @@ std::ostream& operator<<(std::ostream &out, const Grid& g)
 	out << "Score:       " << g.scoreboard->getScore() << std::endl;
 	out << "HighScore:   "    << g.scoreboard->getHighScore() << std::endl;
 	out << "----------" << std::endl;
-	for(int i = invisibleBuffer; i < maxRows; ++i)
+	for(int i = invisibleBuffer; i < maxY; ++i)
 	{
-		for(int j = 0; j < maxCols; ++j)
+		for(int j = 0; j < maxX; ++j)
 		{
 			out << g.cells[i][j];
 		}
@@ -278,7 +274,6 @@ std::ostream& operator<<(std::ostream &out, const Grid& g)
 	if(g.getNextBlock())
 	{
 	   out << *g.getNextBlock();
-		out << std::endl;
 	}
 	return out;
 }

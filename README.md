@@ -23,6 +23,7 @@
 * cooperative mode
 * port to windows
 * replay and video capture
+* unroll loops so sequential access 2d array
 
 [reference 1](http://tetrisproject.googlecode.com/files/TetrisRequirements.pdf)
 [reference 2](http://tetris.wikia.com/wiki/Tetris_Guideline)

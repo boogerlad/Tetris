@@ -6,10 +6,6 @@
 struct I : public Block
 {
 	I(int level);
-	void cw();
-	void ccw();
-	int cwRotIdx() const;
-	int ccwRotIdx() const;
 };
 
 #endif

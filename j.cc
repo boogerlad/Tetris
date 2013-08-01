@@ -8,25 +8,10 @@
 *******************************************************************************/
 #include "j.h"
 
-J::J(int level) : Block::Block(Posn(2, 0), 4, 'J', level)
+J::J(int level) : Block::Block(Posn(3, 0), 'J', level)
 {
-	rotations[0].push_back(Posn(1, 0));
-	rotations[0].push_back(Posn(2, 0));
-	rotations[0].push_back(Posn(2, 1));
-	rotations[0].push_back(Posn(2, 2));
-
-	rotations[1].push_back(Posn(0, 0));
-	rotations[1].push_back(Posn(0, 1));
-	rotations[1].push_back(Posn(1, 0));
-	rotations[1].push_back(Posn(2, 0));
-
-	rotations[2].push_back(Posn(1, 0));
-	rotations[2].push_back(Posn(1, 1));
-	rotations[2].push_back(Posn(1, 2));
-	rotations[2].push_back(Posn(2, 2));
-
-	rotations[3].push_back(Posn(0, 1));
-	rotations[3].push_back(Posn(1, 1));
-	rotations[3].push_back(Posn(2, 1));
-	rotations[3].push_back(Posn(2, 0));
+	cells.push_back(Posn(0, 0));
+	cells.push_back(Posn(0, 1));
+	cells.push_back(Posn(1, 1));
+	cells.push_back(Posn(2, 1));
 }

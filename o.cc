@@ -8,24 +8,10 @@
 *******************************************************************************/
 #include "o.h"
 
-O::O(int level) : Block::Block(Posn(3, 0), 1, 'O', level)
+O::O(int level) : Block::Block(Posn(4, 0), 'O', level)
 {
-	rotations[0].push_back(Posn(0, 0));
-	rotations[0].push_back(Posn(0, 1));
-	rotations[0].push_back(Posn(1, 0));
-	rotations[0].push_back(Posn(1, 1));
-}
-
-void O::cw(){}
-
-void O::ccw(){}
-
-int O::cwRotIdx() const
-{
-	return rotationIndex;
-}
-
-int O::ccwRotIdx() const
-{
-	return O::cwRotIdx();
+	cells.push_back(Posn(0, 0));
+	cells.push_back(Posn(1, 0));
+	cells.push_back(Posn(0, 1));
+	cells.push_back(Posn(1, 1));
 }

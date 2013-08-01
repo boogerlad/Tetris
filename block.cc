@@ -7,157 +7,85 @@
 *******************************************************************************/
 #include "block.h"
 
-Posn::Posn(int r, int c) : r(r), c(c){}
+Posn::Posn(int x, int y) : x(x), y(y) {}
 
 Posn operator+(const Posn a, const Posn b)
 {
-	return Posn(a.r + b.r, a.c + b.c);
+	return Posn(a.x + b.x, a.y + b.y);
 }
 
-void Block::swap(Block &b)
-{
-	Posn tempP = p;
-	p = b.p;
-	b.p = tempP;
-
-	int tempNumRotations = numRotations;
-	numRotations = b.numRotations;
-	b.numRotations = tempNumRotations;
-
-	int tempRotationIndex = rotationIndex;
-	rotationIndex = b.rotationIndex;
-	b.rotationIndex = tempRotationIndex;
-
-	char tempType = type;
-	type = b.type;
-	b.type = tempType;
-
-	int tempLevel = level;
-	level = b.level;
-	b.level = tempLevel;
-
-	std::vector<Posn>* tempRotations = rotations;
-	rotations = b.rotations;
-	b.rotations = tempRotations;
-
-	bool tempSet = set;
-	set = b.set;
-	b.set = tempSet;
-}
-
-Block::Block(Posn p, int numRotations, char type, int level)
+Block::Block(Posn p, char type, int level)
 	: p(p)
-	, numRotations(numRotations)
-	, rotationIndex(0)
 	, type(type)
 	, level(level)
-	, rotations(new std::vector<Posn>[numRotations])
 	, set(false)
 {}
-
-Block::Block(const Block& b)
-	: p(b.p)
-	, numRotations(b.numRotations)
-	, rotationIndex(b.rotationIndex)
-	, type(b.type)
-	, level(b.level)
-	, rotations(new std::vector<Posn>[numRotations])
-	, set(b.set)
-{
-	for(int i = 0; i < numRotations; ++i)
-	{
-		for(std::vector<Posn>::iterator it = b.rotations[i].begin(); it != b.rotations[i].end(); ++it)
-		{
-			rotations[i].push_back(*it);
-		}
-	}
-}
-
-Block::~Block()
-{
-	delete[] rotations;
-}
-
-Block& Block::operator=(const Block &b)
-{
-	Block temp = b;
-	swap(temp);
-	return *this;
-}
 
 void Block::cw()
 {
 	if(!set)
-	++rotationIndex &= (numRotations - 1);
+	for(std::vector<Posn>::iterator it = cells.begin(); it != cells.end(); ++it)
+	{
+		int tempX = it->x;
+		it->x = 2 - it->y;
+		it->y = tempX;
+	}
 }
 
 void Block::ccw()
 {
 	if(!set)
-	--rotationIndex &= (numRotations - 1);
+	for(std::vector<Posn>::iterator it = cells.begin(); it != cells.end(); ++it)
+	{
+		int tempX = it->x;
+		it->x = it->y;
+		it->y = 2 - tempX;
+	}
 }
 
 void Block::left()
 {
-	if(!set)
-	--p.c;
+	--p.x;
 }
 
 void Block::right()
 {
-	if(!set)
-	++p.c;
+	++p.x;
+}
+
+void Block::up()
+{
+	--p.y;
 }
 
 void Block::down()
 {
-	if(!set)
-	++p.r;
+	++p.y;
 }
 
-void Block::removeCells(int absRow)
+void Block::removeCells(int absY)
 {
-	for(std::vector<Posn>::iterator it = rotations[rotationIndex].begin(); it != rotations[rotationIndex].end();)
+	for(std::vector<Posn>::iterator it = cells.begin(); it != cells.end();)
 	{
-		if(absRow - p.r == it->r)
+		if(absY - p.y == it->y)
 		{
-			it = rotations[rotationIndex].erase(it);
+			it = cells.erase(it);
 		}
 		else
 		{
-			if(absRow - p.r < it->r)
+			if(absY - p.y < it->y)
 			{
-				--it->r;
+				--it->y;
 			}
 			++it;
 		}
 	}
-	++p.r;
-}
-
-int Block::getRotIdx() const
-{
-	return rotationIndex;
-}
-
-int Block::cwRotIdx() const
-{
-	return (rotationIndex + 1) & (numRotations - 1);
-}
-
-int Block::ccwRotIdx() const
-{
-	return (rotationIndex - 1) & (numRotations - 1);
+	++p.y;
 }
 
 const std::vector<Posn>& Block::getCells() const
 {
-	return rotations[rotationIndex];
-}
-
-const std::vector<Posn>& Block::getCells(int rotIdx) const
-{
-	return rotations[rotIdx];
+	return cells;
 }
 
 Posn Block::getKey() const
@@ -177,8 +105,9 @@ int Block::getLevel() const
 
 int Block::getNumCells() const
 {
-	return rotations[rotationIndex].size();
+	return cells.size();
 }
+
 std::ostream& operator<<(std::ostream &out, const Block& b)
 {
 	char preview[4][4];
@@ -190,10 +119,9 @@ std::ostream& operator<<(std::ostream &out, const Block& b)
 			preview[i][j] = ' ';
 		}
 	}
-	for(int i = 0; i < b.getNumCells(); ++i)
+	for(std::vector<Posn>::const_iterator it = b.getCells().begin(); it != b.getCells().end(); ++it)
 	{
-		Posn a = b.rotations[b.rotationIndex][i];
-		preview[a.r][a.c] = b.type;
+		preview[it->y][it->x] = b.getType();
 	}
 	for(int i = 0; i < 4; ++i)
 	{

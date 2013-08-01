@@ -4,11 +4,10 @@
 #include <ostream>
 #include <vector>
 
-
 struct Posn
 {
-	int r, c;
-	Posn(int r = 0, int c = 0);
+	int x, y;
+	Posn(int x = 0, int y = 0);
 };
 
 Posn operator+(const Posn a, const Posn b);
@@ -17,37 +16,27 @@ class Block
 {
 	protected:
 		Posn p;
-		int numRotations;
-		int rotationIndex;
 		char type;
 		int level;
-		void swap(Block &b);
-		std::vector<Posn>* rotations;//[numRotations][4 cells]
+		std::vector<Posn> cells;
 	public:
 		bool set;
-		Block(Posn p, int numRotations, char type, int level);
-		Block(const Block& b);
-		virtual ~Block();
-		Block& operator=(const Block& b);
+		Block(Posn p, char type, int level);
+		virtual ~Block() {}
 
 		virtual void cw();
 		virtual void ccw();
 		void left();
 		void right();
+		void up();
 		void down();
-		void removeCells(int absRow);
+		void removeCells(int absY);
 
-		int getRotIdx() const;
-		virtual int cwRotIdx() const;
-		virtual int ccwRotIdx() const;
 		const std::vector<Posn>& getCells() const;
-		const std::vector<Posn>& getCells(int rotIdx) const;
 		Posn getKey() const;
 		char getType() const;
 		int getLevel() const;
 		int getNumCells() const;
-
-		friend std::ostream& operator<<(std::ostream &out, const Block& b);
 };
 
 std::ostream& operator<<(std::ostream &out, const Block& b);

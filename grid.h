@@ -4,15 +4,15 @@
 #include "scoreboard.h"
 #include "level.h"
 
-const int maxRows = 18;
-const int maxCols = 10;
-const int invisibleBuffer = 3;
+const int maxX = 10;
+const int maxY = 22;
+const int invisibleBuffer = 2;
 const char empty = ' ';
 
 class Grid
 {
 		int level;
-		char** cells;
+		char cells[maxY][maxX];
 		BlockGenerator* gen;
 		Scoreboard* scoreboard;
 		Block* currentBlock;
@@ -20,12 +20,13 @@ class Grid
 		std::vector<Block*> blocksOnGrid;
 		void drawBlock(Block& b);
 		void clearBlock(Block& b);
-		bool testCollision(int r, int c, int rotIdx);
+		bool testCollision(bool down = false);
+		void resetGrid();
 	public:
 		Grid(int level, std::string file);
 		~Grid();
 
-		void resetGrid();
+		void reset();
 
 		bool place();
 		void cw();
@@ -43,6 +44,7 @@ class Grid
 		int getLevel() const;
 		void setLevel(int lvl);
 		void setLevel(int lvl, std::string file);
+
 		friend std::ostream& operator<<(std::ostream &out, const Grid &g);
 };
 
