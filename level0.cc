@@ -1,10 +1,3 @@
-/*******************************************************************************
-* Quadris/textris
-* CS 246 Assignment 5 By Max Duan & Kevin Hua
-*
-*
-* Definitions for Level0 class, derived from Level Class
-*******************************************************************************/
 #include "level0.h"
 
 Level0::Level0(std::string& file)

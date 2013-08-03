@@ -1,10 +1,3 @@
-/*******************************************************************************
-* Quadris/textris
-* CS 246 Assignment 5 By Max Duan & Kevin Hua
-*
-*
-* Definitions for Grid class
-*******************************************************************************/
 #include <string>
 #include "grid.h"
 #include <iostream>

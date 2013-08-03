@@ -1,11 +1,3 @@
-/*******************************************************************************
-* Quadris/textris
-* CS 246 Assignment 5 By Max Duan & Kevin Hua
-*
-*
-* Definitions for the O class, subclass of Block
-* All permutations of the relative positions of each cell
-*******************************************************************************/
 #include "o.h"
 
 O::O(int level) : Block::Block(Posn(4, 0), 'O', level)

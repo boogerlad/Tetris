@@ -1,10 +1,3 @@
-/******************************************************************************
-* Quadris/textris
-* CS 246 Assignment 5 By Max Duan & Kevin Hua
-*
-*
-* Main harness, handles User Interface and Command Line Interface
-*******************************************************************************/
 #include <iostream>
 #include <string>
 #include <sstream>

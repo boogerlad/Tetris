@@ -1,10 +1,3 @@
-/*******************************************************************************
-* Quadris/textris
-* CS 246 Assignment 5 By Max Duan & Kevin Hua
-*
-*
-* Definitions for Level1 class, derived from Level Class
-*******************************************************************************/
 #include <cstdlib>
 #include "level1.h"
 

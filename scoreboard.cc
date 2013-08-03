@@ -1,10 +1,3 @@
-/*******************************************************************************
-* Quadris/textris
-* CS 246 Assignment 5 By Max Duan & Kevin Hua
-*
-*
-* Definitions for Scoreboard class, a component of the Grid Class
-*******************************************************************************/
 #include "scoreboard.h"
 
 void Scoreboard::lineScore(int level, int lines)

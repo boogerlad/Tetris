@@ -1,10 +1,3 @@
-/*******************************************************************************
-* Quadris/textris
-* CS 246 Assignment 5 By Max Duan & Kevin Hua
-*
-*
-* Definitions for block class, a component of the Grid Class
-*******************************************************************************/
 #include "block.h"
 
 Posn::Posn(int x, int y) : x(x), y(y) {}
