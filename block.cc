@@ -9,9 +9,11 @@ Posn operator+(const Posn a, const Posn b)
 
 Block::Block(Posn p, char type, int level)
 	: p(p)
+	, ghost(p)
 	, type(type)
 	, level(level)
 	, set(false)
+	, ghostSet(false)
 {}
 
 void Block::cw()
@@ -39,11 +41,13 @@ void Block::ccw()
 void Block::left()
 {
 	--p.x;
+	--ghost.x;
 }
 
 void Block::right()
 {
 	++p.x;
+	++ghost.x;
 }
 
 void Block::up()
@@ -54,6 +58,16 @@ void Block::up()
 void Block::down()
 {
 	++p.y;
+}
+
+void Block::upGhost()
+{
+	--ghost.y;
+}
+
+void Block::downGhost()
+{
+	++ghost.y;
 }
 
 void Block::removeCells(int absY)
@@ -84,6 +98,11 @@ const std::vector<Posn>& Block::getCells() const
 Posn Block::getKey() const
 {
 	return p;
+}
+
+Posn Block::getGhost() const
+{
+	return ghost;
 }
 
 char Block::getType() const

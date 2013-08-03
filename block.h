@@ -16,11 +16,13 @@ class Block
 {
 	protected:
 		Posn p;
+		Posn ghost;
 		char type;
 		int level;
 		std::vector<Posn> cells;
 	public:
 		bool set;
+		bool ghostSet;
 		//make the bools private. set can't be unset, so need setter (one thing only) and getter
 		Block(Posn p, char type, int level);
 		virtual ~Block() {}
@@ -31,10 +33,13 @@ class Block
 		void right();
 		void up();
 		void down();
+		void upGhost();
+		void downGhost();
 		void removeCells(int absY);
 
 		const std::vector<Posn>& getCells() const;
 		Posn getKey() const;
+		Posn getGhost() const;
 		char getType() const;
 		int getLevel() const;
 		int getNumCells() const;

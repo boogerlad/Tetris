@@ -18,12 +18,14 @@ class Grid
 		Scoreboard* scoreboard;
 		Block* currentBlock;
 		Block* nextBlock;
-		Block* ghostBlock;
 		char holdBlock;
 		bool canHold;
 		std::vector<Block*> blocksOnGrid;
 		void drawBlock(Block& b);
 		void clearBlock(Block& b);
+		void drawGhost(Block& b);
+		void clearGhost(Block& b);
+		bool ghostCollision();
 		bool testCollision(bool down = false);
 		void resetGrid();
 	public:
@@ -36,6 +38,7 @@ class Grid
 		void cw();
 		void ccw();
 	 	void drop();
+	 	void dropGhost();
 	 	void down();
 	 	void left();
 		void right();
