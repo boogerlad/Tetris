@@ -37,6 +37,7 @@ bool Grid::testCollision(bool down)
 		else if(absPosn.y < 0 || absPosn.y >= maxY)
 		{
 			currentBlock->set = true;
+			canHold = true;
 			blocksOnGrid.push_back(currentBlock);
 			return true;
 		}
@@ -45,6 +46,7 @@ bool Grid::testCollision(bool down)
 			if(down)
 			{
 				currentBlock->set = true;
+				canHold = true;
 				blocksOnGrid.push_back(currentBlock);
 			}
 			return true;
@@ -59,6 +61,8 @@ Grid::Grid(int level, std::string file)
 	, scoreboard(new Scoreboard())
 	, currentBlock(0)
 	, nextBlock(gen->makeBlock())
+	, holdBlock(0)
+	, canHold(true)
 {
 	resetGrid();
 }
@@ -178,6 +182,27 @@ void Grid::right()
 	drawBlock(*currentBlock);
 }
 
+void Grid::hold()
+{
+	if(canHold && !holdBlock)
+	{
+		holdBlock = currentBlock->getType();
+		clearBlock(*currentBlock);
+		delete currentBlock;
+		currentBlock = nextBlock;
+		nextBlock = gen->makeBlock();
+	}
+	else if(canHold && holdBlock)
+	{
+		char temp = holdBlock;
+		holdBlock = currentBlock->getType();
+		clearBlock(*currentBlock);
+		delete currentBlock;
+		currentBlock = BlockGenerator::makeBlock(temp, level);
+	}
+	canHold = false;
+}
+
 void Grid::clearLines()
 {
 	int numLinesCleared = 0;
@@ -252,7 +277,8 @@ std::ostream& operator<<(std::ostream &out, const Grid& g)
 {
 	out << "Level:       " << g.getLevel() << std::endl;
 	out << "Score:       " << g.scoreboard->getScore() << std::endl;
-	out << "HighScore:   "    << g.scoreboard->getHighScore() << std::endl;
+	out << "HighScore:   " << g.scoreboard->getHighScore() << std::endl;
+	out << "Hold:        " << g.holdBlock << std::endl;
 	out << "----------" << std::endl;
 	for(int i = invisibleBuffer; i < maxY; ++i)
 	{

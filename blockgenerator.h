@@ -11,6 +11,7 @@
 struct BlockGenerator
 {
 	virtual Block* makeBlock() = 0;
+	static Block* makeBlock(char type, int level);
 	virtual ~BlockGenerator() {}
 };
 

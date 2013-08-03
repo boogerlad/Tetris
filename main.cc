@@ -20,6 +20,7 @@ int main(int argc, char* argv[]) {
    string lvDown = "leveldown";
    string restart = "restart";
    string quit = "quit";
+   string hold = "hold";
 
    // seed for random num generator, will be 1 unless specified
    int seed = 1;//time(0);
@@ -192,6 +193,18 @@ int main(int argc, char* argv[]) {
 			}
 		 }
 
+
+		 // check if command is hold
+		 if ( comm.size() <= hold.size() ){
+			 if ( ( hold.compare( 0,comm.size(),comm ) == 0 ) && comm.size() >= 1 ){
+					 g.hold();
+			  }
+		 }
+
+
+
+
+
 		// levelup command
 		 if ( comm.size() <= lvUp.size() ){
 			if ( ( lvUp.compare( 0,comm.size(),comm ) == 0 ) && comm.size() >= 6){
@@ -234,7 +247,6 @@ int main(int argc, char* argv[]) {
 		 cout << g;// << endl;
 		 continue;
 		} else {
-		if ( g.getLevel() == 0 ) { return 42; }
 		 multDrop = false;
 		 cout << "Game Over" << endl;
 		 cout << "Would you like to play again? [y/n]";

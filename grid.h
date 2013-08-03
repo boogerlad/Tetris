@@ -3,6 +3,7 @@
 #include <vector>
 #include "scoreboard.h"
 #include "level.h"
+#include "blockgenerator.h"
 
 const int maxX = 10;
 const int maxY = 22;
@@ -17,6 +18,9 @@ class Grid
 		Scoreboard* scoreboard;
 		Block* currentBlock;
 		Block* nextBlock;
+		Block* ghostBlock;
+		char holdBlock;
+		bool canHold;
 		std::vector<Block*> blocksOnGrid;
 		void drawBlock(Block& b);
 		void clearBlock(Block& b);
@@ -35,6 +39,7 @@ class Grid
 	 	void down();
 	 	void left();
 		void right();
+		void hold();
 
 		void clearLines();
 

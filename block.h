@@ -21,6 +21,7 @@ class Block
 		std::vector<Posn> cells;
 	public:
 		bool set;
+		//make the bools private. set can't be unset, so need setter (one thing only) and getter
 		Block(Posn p, char type, int level);
 		virtual ~Block() {}
 
