@@ -24,7 +24,7 @@ class Block
 		bool set;
 		bool ghostSet;
 		//make the bools private. set can't be unset, so need setter (one thing only) and getter
-		Block(Posn p, char type, int level);
+		Block(char type, int level);
 		virtual ~Block() {}
 
 		virtual void cw();

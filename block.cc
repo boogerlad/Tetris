@@ -7,14 +7,54 @@ Posn operator+(const Posn a, const Posn b)
 	return Posn(a.x + b.x, a.y + b.y);
 }
 
-Block::Block(Posn p, char type, int level)
-	: p(p)
+Block::Block(char type, int level)
+	: p(Posn(3, 0))
 	, ghost(p)
 	, type(type)
 	, level(level)
 	, set(false)
 	, ghostSet(false)
-{}
+{
+	switch(type)
+	{
+		case 'I':
+			for(int i = 0; i < 4; ++i)
+			{
+				cells.push_back(Posn(i, 1));
+			}
+			break;
+		case 'J':
+			cells.push_back(Posn(0, 0));
+			cells.push_back(Posn(0, 1));
+			cells.push_back(Posn(1, 1));
+			cells.push_back(Posn(2, 1));
+			break;
+		case 'L':
+			cells.push_back(Posn(0, 1));
+			cells.push_back(Posn(1, 1));
+			cells.push_back(Posn(2, 1));
+			cells.push_back(Posn(2, 0));
+			break;
+		case 'S':
+			cells.push_back(Posn(0, 1));
+			cells.push_back(Posn(1, 1));
+			cells.push_back(Posn(1, 0));
+			cells.push_back(Posn(2, 0));
+			break;
+		case 'T':
+			cells.push_back(Posn(0, 1));
+			cells.push_back(Posn(1, 1));
+			cells.push_back(Posn(1, 0));
+			cells.push_back(Posn(2, 1));
+			break;
+		case 'Z':
+			cells.push_back(Posn(0, 0));
+			cells.push_back(Posn(1, 0));
+			cells.push_back(Posn(1, 1));
+			cells.push_back(Posn(2, 1));
+			break;
+	}
+}
 
 void Block::cw()
 {

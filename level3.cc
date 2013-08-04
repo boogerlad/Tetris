@@ -7,21 +7,21 @@ Block* Level3::makeBlock()
    switch(num)
    {
       case 0:
-         return new I(3);
+         return new Block('I', 3);
       case 1:
-         return new J(3);
+         return new Block('C', 3);
       case 2:
-         return new L(3);
+         return new Block('L', 3);
       case 3:
          return new O(3);
       case 4:
       case 5:
-         return new S(3);
+         return new Block('S', 3);
       case 6:
       case 7:
-         return new Z(3);
+         return new Block('T', 3);
       case 8:
-         return new T(3);
+         return new Block('Z', 3);
       default:
          return 0;
    }

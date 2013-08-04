@@ -278,7 +278,7 @@ void Grid::hold()
 		holdBlock = currentBlock->getType();
 		clearBlock(*currentBlock);
 		delete currentBlock;
-		currentBlock = BlockGenerator::makeBlock(temp, level);
+		currentBlock = new Block(temp, level);
 	}
 	canHold = false;
 }

@@ -7,19 +7,19 @@ Block* Level2::makeBlock()
    switch(num)
    {
       case 0:
-         return new I(2);
+         return new Block('I', 2);
       case 1:
-         return new J(2);
+         return new Block('J', 2);
       case 2:
-         return new L(2);
+         return new Block('L', 2);
       case 3:
          return new O(2);
       case 4:
-         return new S(2);
+         return new Block('S', 2);
       case 5:
-         return new Z(2);
+         return new Block('T', 2);
       case 6:
-         return new T(2);
+         return new Block('Z', 2);
       default:
          return 0;
    }
