@@ -6,7 +6,9 @@ void Grid::drawBlock(Block& b)
 {
 	for(std::vector<Posn>::const_iterator it = b.getCells().begin(); it != b.getCells().end(); ++it)
 	{
-		Posn absPosn = b.getKey() + *it;
+		Posn absPosn = b.getGhost() + *it;
+		cells[absPosn.y][absPosn.x] = ghost;
+		absPosn = b.getKey() + *it;
 		cells[absPosn.y][absPosn.x] = b.getType();
 	}
 
@@ -14,28 +16,12 @@ void Grid::drawBlock(Block& b)
 
 void Grid::clearBlock(Block& b)
 {
+	b.ghostSet = false;
 	for(std::vector<Posn>::const_iterator it = b.getCells().begin(); it != b.getCells().end(); ++it)
 	{
-		Posn absPosn = b.getKey() + *it;
+		Posn absPosn = b.getGhost() + *it;
 		cells[absPosn.y][absPosn.x] = empty;
-	}
-}
-
-void Grid::drawGhost(Block& b)
-{
-	for(std::vector<Posn>::const_iterator it = b.getCells().begin(); it != b.getCells().end(); ++it)
-	{
-		Posn absPosn = b.getGhost() + *it;
-		cells[absPosn.y][absPosn.x] = 'g';
-	}
-
-}
-
-void Grid::clearGhost(Block& b)
-{
-	for(std::vector<Posn>::const_iterator it = b.getCells().begin(); it != b.getCells().end(); ++it)
-	{
-		Posn absPosn = b.getGhost() + *it;
+		absPosn = b.getKey() + *it;
 		cells[absPosn.y][absPosn.x] = empty;
 	}
 }
@@ -60,7 +46,7 @@ bool Grid::testCollision(bool down)
 			blocksOnGrid.push_back(currentBlock);
 			return true;
 		}
-		else if(cells[absPosn.y][absPosn.x] != empty)
+		else if(cells[absPosn.y][absPosn.x] != empty)// && cells[absPosn.y][absPosn.x] != ghost
 		{
 			if(down)
 			{
@@ -155,8 +141,6 @@ bool Grid::place()
 				currentBlock->upGhost();
 			}
 		}
-		drawGhost(*currentBlock);
-		//clearGhost(*currentBlock);
 		drawBlock(*currentBlock);
 		return true;
 	}
@@ -164,8 +148,6 @@ bool Grid::place()
 
 void Grid::cw()
 {
-	currentBlock->ghostSet = false;
-	clearGhost(*currentBlock);
 	clearBlock(*currentBlock);
 	currentBlock->cw();
 	if(Grid::testCollision())
@@ -178,8 +160,6 @@ void Grid::cw()
 
 void Grid::ccw()
 {
-	currentBlock->ghostSet = false;
-	clearGhost(*currentBlock);
 	clearBlock(*currentBlock);
 	currentBlock->ccw();
 	if(Grid::testCollision())
@@ -192,8 +172,6 @@ void Grid::ccw()
 
 void Grid::down()
 {
-	currentBlock->ghostSet = false;
-	clearGhost(*currentBlock);
 	clearBlock(*currentBlock);
 	currentBlock->down();
 	if(Grid::testCollision(true))
@@ -206,9 +184,7 @@ void Grid::down()
 
 void Grid::drop()
 {
-	currentBlock->ghostSet = false;
 	clearBlock(*currentBlock);
-	clearGhost(*currentBlock);
 	while(!currentBlock->set)
 	{
 		currentBlock->down();
@@ -222,7 +198,6 @@ void Grid::drop()
 
 void Grid::dropGhost()
 {
-	clearGhost(*currentBlock);
 	while(!currentBlock->ghostSet)
 	{
 		currentBlock->downGhost();
@@ -231,13 +206,10 @@ void Grid::dropGhost()
 			currentBlock->upGhost();
 		}
 	}
-	drawGhost(*currentBlock);
 }
 
 void Grid::left()
 {
-	currentBlock->ghostSet = false;
-	clearGhost(*currentBlock);
 	clearBlock(*currentBlock);
 	currentBlock->left();
 	if(Grid::testCollision())
@@ -250,8 +222,6 @@ void Grid::left()
 
 void Grid::right()
 {
-	currentBlock->ghostSet = false;
-	clearGhost(*currentBlock);
 	clearBlock(*currentBlock);
 	currentBlock->right();
 	if(Grid::testCollision())
@@ -264,23 +234,23 @@ void Grid::right()
 
 void Grid::hold()
 {
-	if(canHold && !holdBlock)
-	{
-		holdBlock = currentBlock->getType();
-		clearBlock(*currentBlock);
-		delete currentBlock;
-		currentBlock = nextBlock;
-		nextBlock = gen->makeBlock();
-	}
-	else if(canHold && holdBlock)
+	if(canHold)
 	{
 		char temp = holdBlock;
 		holdBlock = currentBlock->getType();
 		clearBlock(*currentBlock);
 		delete currentBlock;
-		currentBlock = new Block(temp, level);
+		if(holdBlock)
+		{
+			currentBlock = new Block(temp, level);
+		}
+		else
+		{
+			currentBlock = nextBlock;
+			nextBlock = gen->makeBlock();
+		}
+		canHold = false;
 	}
-	canHold = false;
 }
 
 void Grid::clearLines()

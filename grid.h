@@ -9,6 +9,7 @@ const int maxX = 10;
 const int maxY = 22;
 const int invisibleBuffer = 2;
 const char empty = ' ';
+const char ghost = 'g';
 
 class Grid
 {
@@ -23,8 +24,6 @@ class Grid
 		std::vector<Block*> blocksOnGrid;
 		void drawBlock(Block& b);
 		void clearBlock(Block& b);
-		void drawGhost(Block& b);
-		void clearGhost(Block& b);
 		bool ghostCollision();
 		bool testCollision(bool down = false);
 		void resetGrid();
