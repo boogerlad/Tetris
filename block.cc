@@ -64,6 +64,7 @@ void Block::cw()
 		it->x = 2 - it->y;
 		it->y = tempX;
 	}
+	ghost = p;
 }
 
 void Block::ccw()
@@ -74,28 +75,31 @@ void Block::ccw()
 		it->x = it->y;
 		it->y = 2 - tempX;
 	}
+	ghost = p;
 }
 
 void Block::left()
 {
 	--p.x;
-	--ghost.x;
+	ghost = p;
 }
 
 void Block::right()
 {
 	++p.x;
-	++ghost.x;
+	ghost = p;
 }
 
 void Block::up()
 {
 	--p.y;
+	ghost = p;
 }
 
 void Block::down()
 {
 	++p.y;
+	ghost = p;
 }
 
 void Block::upGhost()
