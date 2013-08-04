@@ -58,7 +58,6 @@ Block::Block(char type, int level)
 
 void Block::cw()
 {
-	if(!set)
 	for(std::vector<Posn>::iterator it = cells.begin(); it != cells.end(); ++it)
 	{
 		int tempX = it->x;
@@ -69,7 +68,6 @@ void Block::cw()
 
 void Block::ccw()
 {
-	if(!set)
 	for(std::vector<Posn>::iterator it = cells.begin(); it != cells.end(); ++it)
 	{
 		int tempX = it->x;
