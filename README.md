@@ -25,7 +25,6 @@
 * [replay and video capture](http://www.codeproject.com/Articles/15941/Recording-DirectX-and-OpenGL-Rendered-Animations)
 * unroll loops so sequential access 2d array
 * gravity, das, arr, lock delay
-* rotation is broken due to ghost
 
 [reference 1](http://tetrisproject.googlecode.com/files/TetrisRequirements.pdf)
 [reference 2](http://tetris.wikia.com/wiki/Tetris_Guideline)
