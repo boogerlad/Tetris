@@ -10,7 +10,10 @@ Level0::Level0(std::string& file)
 Block* Level0::makeBlock()
 {
 	char c;
-	if (sequence.eof()) { return NULL; }
+	if (sequence.eof())
+	{
+		return 0;
+	}
 	sequence >> c;
 	switch(c)
 	{

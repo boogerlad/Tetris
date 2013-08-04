@@ -2,7 +2,6 @@
 #include <string>
 #include <sstream>
 #include <stdlib.h>
-#include <time.h>
 #include <chrono>
 #include "grid.h"
 
@@ -23,7 +22,7 @@ int main(int argc, char* argv[]) {
    string hold = "hold";
 
    // seed for random num generator, will be 1 unless specified
-   int seed = 1;//time(0);
+   int seed = 1;//check ideone
 
    // counter for for-loop
    int counter = 1;
@@ -186,7 +185,7 @@ int main(int argc, char* argv[]) {
 			   }
 
 	auto finish = std::chrono::high_resolution_clock::now();
-	std::cout << (finish - start).count() << " microseconds\n";
+	std::cout << (finish - start).count() << " microseconds\n";//casts are important in the future cross platofrm
 	unsigned long long time = (finish - start).count();
 	std::cout << time << std::endl;
 
