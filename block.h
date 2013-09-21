@@ -43,6 +43,8 @@ class Block
 		char getType() const;
 		int getLevel() const;
 		int getNumCells() const;
+		
+		void updateGhost();
 };
 
 std::ostream& operator<<(std::ostream &out, const Block& b);
