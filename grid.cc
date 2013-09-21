@@ -178,6 +178,7 @@ void Grid::down()
 	{
 		currentBlock->up();
 	}
+	currentBlock->updateGhost();
 	Grid::dropGhost();
 	drawBlock(*currentBlock);
 }
@@ -193,6 +194,7 @@ void Grid::drop()
 			currentBlock->up();
 		}
 	}
+	currentBlock->updateGhost();
 	drawBlock(*currentBlock);
 }
 
@@ -216,6 +218,7 @@ void Grid::left()
 	{
 		currentBlock->right();
 	}
+	currentBlock->updateGhost();
 	Grid::dropGhost();
 	drawBlock(*currentBlock);
 }
@@ -228,6 +231,7 @@ void Grid::right()
 	{
 		currentBlock->left();
 	}
+	currentBlock->updateGhost();
 	Grid::dropGhost();
 	drawBlock(*currentBlock);
 }
