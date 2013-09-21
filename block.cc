@@ -197,7 +197,7 @@ std::ostream& operator<<(std::ostream &out, const Block& b)
 	return out;
 }
 
-void updateGhost()
+void Block::updateGhost()
 {
 	ghost = p;
 }
