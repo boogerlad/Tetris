@@ -154,6 +154,7 @@ void Grid::cw()
 	{
 		currentBlock->ccw();
 	}
+	currentBlock->updateGhost();
 	Grid::dropGhost();
 	drawBlock(*currentBlock);
 }
@@ -166,6 +167,7 @@ void Grid::ccw()
 	{
 		currentBlock->cw();
 	}
+	currentBlock->updateGhost();
 	Grid::dropGhost();
 	drawBlock(*currentBlock);
 }
