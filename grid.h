@@ -36,10 +36,10 @@ class Grid
 		bool place();
 		void cw();
 		void ccw();
-	 	void drop();
-	 	void dropGhost();
-	 	void down();
-	 	void left();
+		void drop();
+		void dropGhost();
+		void down();
+		void left();
 		void right();
 		void hold();
 
