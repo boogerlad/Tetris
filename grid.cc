@@ -1,6 +1,5 @@
 #include <string>
 #include "grid.h"
-#include <iostream>
 
 void Grid::drawBlock(Block& b)
 {
