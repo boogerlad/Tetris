@@ -1,5 +1,6 @@
 #include <string>
 #include "grid.h"
+#include <iostream>
 
 void Grid::drawBlock(Block& b)
 {
@@ -242,17 +243,26 @@ void Grid::hold()
 	if(canHold)
 	{
 		char temp = holdBlock;
+		std::cout << "wow" << temp << std::endl;
 		holdBlock = currentBlock->getType();
 		clearBlock(*currentBlock);
 		delete currentBlock;
-		if(holdBlock)
+		if(temp)
 		{
 			currentBlock = new Block(temp, level);
+			while(!currentBlock->ghostSet)
+			{
+				currentBlock->downGhost();
+				if(Grid::ghostCollision())
+				{
+					currentBlock->upGhost();
+				}
+			}
+			drawBlock(*currentBlock);
 		}
 		else
 		{
-			currentBlock = nextBlock;
-			nextBlock = gen->makeBlock();
+			Grid::place();
 		}
 		canHold = false;
 	}
@@ -278,6 +288,7 @@ void Grid::clearLines()
 			{
 		   		clearBlock(*(*it));
 		   		(*it)->removeCells(i);
+		   		(*it)->updateGhost();
 				if(!(*it)->getNumCells())
 				{
 					scoreboard->blockScore(*(*it));
