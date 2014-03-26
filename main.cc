@@ -239,7 +239,6 @@ int main(int argc, char* argv[]) {
 		 cout << g;// << endl;
 	  }
 	  // checks if we can clear lines and blocks
-	  cout << "whereami" << endl;
 	  g.clearLines();
 
 	  //make new block check for game over

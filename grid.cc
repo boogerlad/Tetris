@@ -243,7 +243,6 @@ void Grid::hold()
 	if(canHold)
 	{
 		char temp = holdBlock;
-		std::cout << "wow" << temp << std::endl;
 		holdBlock = currentBlock->getType();
 		clearBlock(*currentBlock);
 		delete currentBlock;
