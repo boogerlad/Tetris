@@ -1,7 +1,6 @@
 #Textris
 
 ###Todo
-* switch from row, column notation to x, y
 * cleanup
 * split main to main + input interpretor
 * observer pattern
