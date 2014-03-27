@@ -31,11 +31,3 @@ adsf
 	make
 	./quadris
 That will compile for you. Left, right, down, drop, clockwise, counterclockwise, levelup, leveldown and restart work. You can prepend an integer multiplier in front of each if you want. Exit by eof aka ctrl+d.
-
-
-###notes for me
-merge cases
-* modify a file here, modify a different file somewhere else
-Merge made by the 'recursive' strategy.
-
-* modify a file here, modify that same file somewhere else
