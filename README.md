@@ -38,6 +38,4 @@ merge cases
 * modify a file here, modify a different file somewhere else
 Merge made by the 'recursive' strategy.
 
-wow
-
 * modify a file here, modify that same file somewhere else
