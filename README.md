@@ -36,8 +36,8 @@ That will compile for you. Left, right, down, drop, clockwise, counterclockwise,
 ###notes for me
 merge cases
 * modify a file here, modify a different file somewhere else
-* modify a file here, modify that same file somewhere else
-* modify a file here, add/delete a file somewhere else.
 Merge made by the 'recursive' strategy.
 
 wow
+
+* modify a file here, modify that same file somewhere else
