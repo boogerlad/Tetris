@@ -18,10 +18,10 @@ Block::Block(char type, int level)
 	switch(type)
 	{
 		case 'I':
-			for(int i = 0; i < 4; ++i)
-			{
-				cells.push_back(Posn(i, 1));
-			}
+			cells.push_back(Posn(i, 0));
+			cells.push_back(Posn(i, 1));
+			cells.push_back(Posn(i, 2));
+			cells.push_back(Posn(i, 3));
 			break;
 		case 'J':
 			cells.push_back(Posn(0, 0));
