@@ -33,4 +33,4 @@ gooby pls
 That will compile for you. Left, right, down, drop, clockwise, counterclockwise, levelup, leveldown and restart work. You can prepend an integer multiplier in front of each if you want. Exit by eof aka ctrl+d.
 
 
-do u want some wow
+do u want some w0w
