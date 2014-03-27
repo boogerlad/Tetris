@@ -4,9 +4,7 @@
 * cleanup
 * split main to main + input interpretor
 * observer pattern
-* ghost piece
 * 5 next piece queue
-* block hold
 * clock
 * wallkicks
 * srs
@@ -33,3 +31,10 @@
 	make
 	./quadris
 That will compile for you. Left, right, down, drop, clockwise, counterclockwise, levelup, leveldown and restart work. You can prepend an integer multiplier in front of each if you want. Exit by eof aka ctrl+d.
+
+
+###notes for me
+merge cases
+* modify a file here, modify a different file somewhere else
+* modify a file here, modify that same file somewhere else
+* modify a file here, add/delete a file somewhere else.
