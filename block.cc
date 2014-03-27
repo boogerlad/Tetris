@@ -201,5 +201,3 @@ void Block::updateGhost()
 {
 	ghost = p;
 }
-
-//not wow

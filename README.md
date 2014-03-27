@@ -1,5 +1,5 @@
 #Textris
-
+gooby pls
 ###Todo
 * cleanup
 * split main to main + input interpretor
