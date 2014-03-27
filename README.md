@@ -1,5 +1,5 @@
 #Textris
-adsf
+
 ###Todo
 * cleanup
 * split main to main + input interpretor
