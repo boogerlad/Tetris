@@ -34,5 +34,3 @@ That will compile for you. Left, right, down, drop, clockwise, counterclockwise,
 
 
 do u want some w0w omg I don't know what I'm doing with git
-
-new line merge i dk
